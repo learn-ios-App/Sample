@@ -1,21 +1,31 @@
-//
-//  ContentView.swift
-//  Sample
-//
-//  Created by 渡邊魁優 on 2023/02/08.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isActive = false
+    @State private var index = 0
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Button(action: {
+                index += 10
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { isActive = true })
+                isActive = true
+            }) {
+                Text("解析する")
+            }
         }
-        .padding()
+        .sheet(isPresented: $isActive) {
+            LabelView(numberLabel: index)
+        }
+    }
+}
+
+struct LabelView: View {
+    @State var numberLabel: Int
+    var body: some View {
+        VStack {
+            Text("\(numberLabel)")
+        }
     }
 }
 
